@@ -71,10 +71,6 @@ def politicsNews():
         cur.execute("INSERT INTO Politics(Headline,Link,Date) VALUES(%s,%s,%s)",(headline, link, date))
         conn.commit()
 
-footballNews()
-startupsNews()
-politicsNews()
-
 cur.close()
 conn.close()
 
