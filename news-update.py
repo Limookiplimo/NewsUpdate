@@ -13,6 +13,7 @@ def footballNews():
     elements = soup.find_all("div", class_="teaser__copy-container")
 
     for element in elements:
+        
         headline = element.find("h3", class_="teaser__headline").text.strip()
         deck = element.find("p", class_="teaser__subdeck").text.strip()
         link = element.find("a", class_="text-anchor-wrap")['href']
@@ -28,6 +29,7 @@ def footballNews():
         conn.commit()
 
 def startupsNews():
+
     website = "https://techcrunch.com/category/startups/"
     page = requests.get(website)
     soup = BeautifulSoup(page.content, "html.parser")
