@@ -74,7 +74,3 @@ def scrape_politics():
     populate_table("Politics", politics_data)
 
 
-scrape_sports()
-scrape_startups()
-scrape_politics()
-
