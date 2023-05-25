@@ -4,12 +4,12 @@ from smtplib import SMTP
 from email.mime.text import MIMEText
 import configs
 
-# Call database
-def db_conn():
-    conn = psycopg2.connect(host=configs.host, database=configs.database, user=configs.user, password=configs.password)
-    return conn
 
-# Query execution
+# Establish db connections and execute queries
+def db_conn():
+    with psycopg2.connect(host=configs.host, database=configs.database, user=configs.user, password=configs.password) as conn:
+        return conn
+
 def db_query(cursor, query):
     cursor.execute(query)
     return cursor.fetchall()
