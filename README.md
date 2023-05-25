@@ -1,3 +1,9 @@
 # Auto News Updater
 
-Automating daily news update from top global print media houses. The updates are sent to email every morning, while a record of each is stored on a postgres database for future data analysis.
+Automated news updated from favourite print media.
+
+## Scrape
+Scrape data from New York Times, The Sun, TechCrunch and Tuko news. The data is stored in postgres database as news items.
+
+## Mail Update
+Every day, scraped news items are formated and a notification is pushed to personal mail.
