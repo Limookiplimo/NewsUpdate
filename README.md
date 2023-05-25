@@ -1,6 +1,6 @@
 # Auto News Updater
 
-Automated news updated from favourite print media.
+Receive news updates from favourite print media.
 
 ## Scrape
 Scrape data from New York Times, The Sun, TechCrunch and Tuko news. The data is stored in postgres database as news items.
