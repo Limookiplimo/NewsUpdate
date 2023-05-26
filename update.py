@@ -48,7 +48,7 @@ def mail_update():
     conn = db_conn()
     cur = conn.cursor()
     #create sql queries
-    sports_query = "select * from football limit 3"
+    sports_query = "select subtitle, link from football limit 3"
     startups_query = "select title, link from startups limit 3"
     politics_query = "select headline, link from politics limit 3"
     #execute sql query
@@ -65,4 +65,4 @@ def mail_update():
     body += "SPORTS \n"+ sports_msg + "STARTUPS \n" + startups_msg + "POLITICS \n" + politics_msg
     #send mail
     submit_mail(sender, recipient, subject, body, token)
-
+mail_update()
