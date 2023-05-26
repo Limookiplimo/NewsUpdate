@@ -1,4 +1,6 @@
 env
+.env
+logs
 chromedriver_linux64
 configs.py
 __pycache__
