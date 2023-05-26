@@ -2,15 +2,39 @@ version: "3.9"
 
 services:
   postgres:
-    image: postgres:13-alpine
+    image: postgres:13
     environment:
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: user
-      POSTGRES_DB: news
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=user
+      - POSTGRES_DB=news
+    volumes:
+      - ./postgres_data:/var/lib/postgresql/data
     ports:
-      - "5432:5432"
-    healthcheck:
-      test: [ "CMD", "pg_isready", "-U", "user" ]
-      interval: 5s
-      retries: 5
-    restart: always
+      - 5432:5432
+
+  webserver:
+    image: apache/airflow:2.2.3
+    environment:
+      - AIRFLOW__CORE__SQL_ALCHEMY_CONN=postgresql+psycopg2://user:user@localhost:5432/airflow
+      - AIRFLOW__CORE__EXECUTOR=LocalExecutor
+      - AIRFLOW__CORE__LOAD_EXAMPLES=False
+
+    volumes:
+      - ./dags:/opt/airflow/dags
+      - ./logs:/opt/airflow/logs
+      - ./plugins:/opt/airflow/plugins
+    ports:
+      - 8080:8080
+    depends_on:
+      - postgres
+    command: webserver
+
+  scheduler:
+    image: apache/airflow:2.2.3
+    depends_on:
+      - webserver
+    volumes:
+      - ./dags:/opt/airflow/dags
+      - ./logs:/opt/airflow/logs
+      - ./plugins:/opt/airflow/plugins
+    command: scheduler
