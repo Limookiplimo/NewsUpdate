@@ -35,7 +35,7 @@ def scrape_sports():
         link = element.find("a", class_="text-anchor-wrap")['href']
         sports_data.append((title, subtitle, link))
 
-    create_table("Football", ["Headline VARCHAR(255)","Deck VARCHAR(255)", "Link VARCHAR(255)"])
+    create_table("Football", ["Title VARCHAR(255)","Subtitle VARCHAR(255)", "Link VARCHAR(255)"])
     populate_table("Football", sports_data)
 
 # Scrape techcrunch
@@ -70,7 +70,7 @@ def scrape_politics():
         date = element.find("time")["datetime"]  
         politics_data.append((title, link, date))
     
-    create_table("Politics", ["Headline VARCHAR(255)","Link VARCHAR(255)","Date DATE"])
+    create_table("Politics", ["Title VARCHAR(255)","Link VARCHAR(255)","Date DATE"])
     populate_table("Politics", politics_data)
 
 
