@@ -30,7 +30,7 @@ services:
     volumes:
       - postgres-db-volume:/var/lib/postgresql/airflow_data
     ports:
-      - 5432:5432
+      - :5432
     healthcheck:
       test: ["CMD", "pg_isready", "-U", "airflow"]
       interval: 5s
@@ -40,15 +40,15 @@ services:
   news_db:
     image: postgres:alpine
     environment:
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: user
-      POSTGRES_DB: news
+      POSTGRES_USER: limoo
+      POSTGRES_PASSWORD: limoo
+      POSTGRES_DB: limoo
     volumes:
       - postgres-db-volume:/var/lib/postgresql/news_data
     ports:
-      - :5432
+      - 5432:5432
     healthcheck:
-      test: ["CMD", "pg_isready", "-U", "news"]
+      test: ["CMD", "pg_isready", "-U", "limoo"]
       interval: 5s
       retries: 5
     restart: always
