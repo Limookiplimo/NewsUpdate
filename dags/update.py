@@ -65,5 +65,4 @@ def mail_update():
     body += "SPORTS \n"+ sports_msg + "STARTUPS \n" + startups_msg + "POLITICS \n" + politics_msg
     #send mail
     submit_mail(sender, recipient, subject, body, token)
-    
-mail_update()
+
