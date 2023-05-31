@@ -2,12 +2,12 @@ import os
 import psycopg2
 from smtplib import SMTP
 from email.mime.text import MIMEText
-import configs
+from configs import host, database, port, user, password, sender, recipient
 
 
 # Establish db connections and execute queries
 def db_conn():
-    with psycopg2.connect(host=configs.host, database=configs.database, user=configs.user, password=configs.password) as conn:
+    with psycopg2.connect(host=host, port=port, database=database, user=user, password=password) as conn:
         return conn
 
 def db_query(cursor, query):
@@ -42,8 +42,8 @@ def format_message(rows):
 def mail_update():
     #apply mail credentials
     token = os.environ.get("smtp_news_token")
-    sender = configs.sender
-    recipient = configs.recipient
+    sender = sender
+    recipient = recipient
     #establish database connection
     conn = db_conn()
     cur = conn.cursor()
