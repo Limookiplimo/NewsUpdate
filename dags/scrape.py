@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup
 
 # Establish db connection and create table
 def create_table(table_name, columns):
-    with psycopg2.connect(host="localhost", port=5432, database="limoo", user="limoo", password="limoo") as conn:
+    with psycopg2.connect(host="localhost", port="5432", database="limoo", user="limoo", password="limoo") as conn:
         with conn.cursor() as cur:
             cur.execute(f"""
                 create table if not exists {table_name}(
@@ -12,7 +12,7 @@ def create_table(table_name, columns):
 
 # Insert data into db
 def populate_table(table_name, data):
-    with psycopg2.connect(host="localhost", port="5432", database="airflow", user="airflow", password="airflow") as conn:
+    with psycopg2.connect(host="localhost", port="5432", database="limoo", user="limoo", password="limoo") as conn:
         with conn.cursor() as cur:
             cur.executemany(f"""
                 insert into {table_name} values(
@@ -76,5 +76,3 @@ def scrape_politics():
     
     create_table("Politics", ["Title VARCHAR(255)","Link VARCHAR(255)","Date DATE"])
     populate_table("Politics", politics_data)
-
-
