@@ -1,6 +1,6 @@
 # Auto News Updater
 
-Receive news updates from favourite print media.
+Receive news updates from favourite print media to your email.
 
 ## Scrape
 Scrape data from The Sun, TechCrunch and Tuko news. The data is stored in postgres database as news items.
