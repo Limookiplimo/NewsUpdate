@@ -1,31 +1,42 @@
-from datetime import datetime, timedelta
+from datetime import datetime
 from airflow import DAG
 from airflow.operators.python_operator import PythonOperator
-from scrape import scrape_sports, scrape_startups, scrape_politics
+from scrape import scrape_sports, scrape_politics, scrape_startups
+from update import mail_update
 
 default_args = {
-    'start_date': datetime(2023, 5, 31),
-    'retries': 1,
-    'retry_delay': timedelta(minutes=1),
+    "start_date": datetime(2023, 5, 28),
+    "owner": "test_user"
 }
 
-# DAG for scraping sports data
-with DAG('scrape_sports_dag', default_args=default_args, schedule_interval='@daily') as sports_dag:
-    scrape_sports_task = PythonOperator(
-        task_id='scrape_sports_task',
-        python_callable=scrape_sports
-    )
+dag = DAG(
+    dag_id="my_dag",
+    default_args=default_args,
+    schedule_interval="*/5 * * * *"
+)
 
-# DAG for scraping startup data
-with DAG('scrape_startups_dag', default_args=default_args, schedule_interval='@daily') as startups_dag:
-    scrape_startups_task = PythonOperator(
-        task_id='scrape_startups_task',
-        python_callable=scrape_startups
-    )
+scrape_sports_task = PythonOperator(
+    task_id='scrape_sports',
+    python_callable=scrape_sports,
+    dag=dag,
+)
 
-# DAG for scraping politics data
-with DAG('scrape_politics_dag', default_args=default_args, schedule_interval='@daily') as politics_dag:
-    scrape_politics_task = PythonOperator(
-        task_id='scrape_politics_task',
-        python_callable=scrape_politics
-    )
+scrape_startups_task = PythonOperator(
+    task_id="scrape_startups",
+    python_callable=scrape_startups,
+    dag=dag,
+)
+
+scrape_politics_task = PythonOperator(
+    task_id="scrape_politics",
+    python_callable=scrape_politics,
+    dag=dag,
+)
+
+update_task = PythonOperator(
+    task_id='update_mail',
+    python_callable=mail_update,
+    dag=dag,
+)
+
+[scrape_sports_task, scrape_startups_task, scrape_politics_task] >> update_task
