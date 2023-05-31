@@ -1,10 +1,11 @@
 import psycopg2
 import requests
 from bs4 import BeautifulSoup
+from configs import host, database, port, user, password
 
 # Establish db connection and create table
 def create_table(table_name, columns):
-    with psycopg2.connect(host="localhost", port="5432", database="limoo", user="limoo", password="limoo") as conn:
+    with psycopg2.connect(host=host, port=port, database=database, user=user, password=password) as conn:
         with conn.cursor() as cur:
             cur.execute(f"""
                 create table if not exists {table_name}(
@@ -12,7 +13,7 @@ def create_table(table_name, columns):
 
 # Insert data into db
 def populate_table(table_name, data):
-    with psycopg2.connect(host="localhost", port="5432", database="limoo", user="limoo", password="limoo") as conn:
+    with psycopg2.connect(host=host, port=port, database=database, user=user, password=password) as conn:
         with conn.cursor() as cur:
             cur.executemany(f"""
                 insert into {table_name} values(
